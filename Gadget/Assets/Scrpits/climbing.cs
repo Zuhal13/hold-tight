@@ -6,11 +6,13 @@ public class climbing : MonoBehaviour
 {
     public GameObject rHand, lHand;
     public float speed;
+    public int totaCoilSpringCount;
 
     bool rightMove,leftMove;
     float rTimer,lTimer;
     float rStartPos, lStartPos;
     float rLastPos, lLastPos;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -37,7 +39,7 @@ public class climbing : MonoBehaviour
             
 
             rTimer += 0.005f;
-            rHand.transform.position = new Vector3(rHand.transform.position.x, rStartPos + Mathf.PingPong(rTimer*speed, 1), rHand.transform.position.z);
+            rHand.transform.position = new Vector3(rHand.transform.position.x, rStartPos + Mathf.PingPong(rTimer*speed, 1f), rHand.transform.position.z);
 
         }
         else if (leftMove)
@@ -45,13 +47,15 @@ public class climbing : MonoBehaviour
             
 
             lTimer += 0.005f;
-            lHand.transform.position = new Vector3(lHand.transform.position.x, lStartPos + Mathf.PingPong(lTimer*speed, 1), lHand.transform.position.z);
+            lHand.transform.position = new Vector3(lHand.transform.position.x, lStartPos + Mathf.PingPong(lTimer*speed, 1f), lHand.transform.position.z);
         }
 
         if (Input.GetMouseButtonDown(0)&&rightMove)
         {
             rHand.transform.DOMoveZ(0.3f, 0.1f);
             lHand.transform.DOMoveZ(0.1f, 0.1f);
+            rHand.GetComponent<BoxCollider>().enabled = true;
+            lHand.GetComponent<BoxCollider>().enabled = false;
 
             rightMove = false;
             rLastPos = rHand.transform.position.y;
@@ -62,6 +66,8 @@ public class climbing : MonoBehaviour
         {
             rHand.transform.DOMoveZ(0.1f, 0.1f);
             lHand.transform.DOMoveZ(0.3f, 0.1f);
+            rHand.GetComponent<BoxCollider>().enabled = false;
+            lHand.GetComponent<BoxCollider>().enabled = true;
 
             leftMove = false;
             lLastPos = lHand.transform.position.y;
