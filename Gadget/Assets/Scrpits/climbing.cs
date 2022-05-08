@@ -5,14 +5,23 @@ using DG.Tweening;
 public class climbing : MonoBehaviour
 {
     public GameObject rHand, lHand;
+    public float speed;
 
     bool rightMove,leftMove;
     float rTimer,lTimer;
     float rStartPos, lStartPos;
     float rLastPos, lLastPos;
     // Start is called before the first frame update
+    private void Awake()
+    {
+        rHand.transform.DOMoveZ(0.3f, 0.05f);
+        lHand.transform.DOMoveZ(0.3f, 0.05f);
+
+    }
     void Start()
     {
+        rHand.transform.DOMoveZ(0.1f, 0.05f);
+
         rStartPos = rHand.transform.position.y;
         lStartPos = lHand.transform.position.y;
 
@@ -25,18 +34,25 @@ public class climbing : MonoBehaviour
     {
         if (rightMove)
         {
+            
+
             rTimer += 0.005f;
-            rHand.transform.position = new Vector3(rHand.transform.position.x, rStartPos + Mathf.PingPong(rTimer, 1), rHand.transform.position.z);
+            rHand.transform.position = new Vector3(rHand.transform.position.x, rStartPos + Mathf.PingPong(rTimer*speed, 1), rHand.transform.position.z);
 
         }
         else if (leftMove)
         {
+            
+
             lTimer += 0.005f;
-            lHand.transform.position = new Vector3(lHand.transform.position.x, lStartPos + Mathf.PingPong(lTimer, 1), lHand.transform.position.z);
+            lHand.transform.position = new Vector3(lHand.transform.position.x, lStartPos + Mathf.PingPong(lTimer*speed, 1), lHand.transform.position.z);
         }
 
         if (Input.GetMouseButtonDown(0)&&rightMove)
         {
+            rHand.transform.DOMoveZ(0.3f, 0.1f);
+            lHand.transform.DOMoveZ(0.1f, 0.1f);
+
             rightMove = false;
             rLastPos = rHand.transform.position.y;
 
@@ -44,6 +60,9 @@ public class climbing : MonoBehaviour
         }
         else if (Input.GetMouseButtonDown(0)&&leftMove)
         {
+            rHand.transform.DOMoveZ(0.1f, 0.1f);
+            lHand.transform.DOMoveZ(0.3f, 0.1f);
+
             leftMove = false;
             lLastPos = lHand.transform.position.y;
 
@@ -53,7 +72,7 @@ public class climbing : MonoBehaviour
     }
 
     void rBoolChanger()
-    {
+    {       
         lStartPos = rLastPos;
         lTimer = 0;
         leftMove = true;

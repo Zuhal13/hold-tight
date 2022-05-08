@@ -5,6 +5,7 @@ using DG.Tweening;
 public class player : MonoBehaviour
 {
     public GameObject rMagnet, lMagnet;
+    public float speed;
 
     float rStartPos, lStartPos;
     float rLastPos,lLastPos;
@@ -50,7 +51,7 @@ public class player : MonoBehaviour
         if (canRightMove&&!canLefttMove)
         {
             rTimer += 0.005f;
-            rMagnet.transform.position = new Vector3(rMagnet.transform.position.x, rStartPos + Mathf.PingPong(rTimer, 1), rMagnet.transform.position.z);
+            rMagnet.transform.position = new Vector3(rMagnet.transform.position.x, rStartPos + Mathf.PingPong(rTimer, 1)*speed, rMagnet.transform.position.z);
 
         }
        
@@ -60,7 +61,7 @@ public class player : MonoBehaviour
         if (!canRightMove&&canLefttMove)
         {
             lTimer += 0.005f;
-            lMagnet.transform.position = new Vector3(lMagnet.transform.position.x, lStartPos + Mathf.PingPong(lTimer, 1), lMagnet.transform.position.z);
+            lMagnet.transform.position = new Vector3(lMagnet.transform.position.x, lStartPos + Mathf.PingPong(lTimer, 1)*speed, lMagnet.transform.position.z);
 
         }
     }
